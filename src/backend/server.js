@@ -38,8 +38,8 @@ app.get("/", (req, res) => {
 app.post('/sign_up', (req, res) => {
     console.log("sign up", req.body);
     const username = req.body.username;
-    const ac_no = req.body.ac_no;
-    const customer_id = req.body.customer_id;
+    const ac_no = req.body.acno;
+    const customer_id = req.body.customerid;
     const password = req.body.password;
     const ph_no = req.body.ph_no;
     const branch = req.body.branch;
@@ -49,19 +49,49 @@ app.post('/sign_up', (req, res) => {
     const beneficiary_ac = req.body.beneficiary_ac;
     const balance = 0;
 
+    console.log("Customer", customer_id);
+    console.log("Customer", ac_no);
+
+    console.log("Checking data");
+
     const insertquery = `INSERT INTO customers(name, ac_no, customer_id, password, ph_no, branch, ifsc_code, card_no, card_type, beneficiary_ac, saving_balance, current_balance, credit_balance) VALUES (?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?)`;
     const value = [username, ac_no, customer_id, password, ph_no, branch, ifsc_code, card_no, card_type, beneficiary_ac, balance, balance, balance];
 
     connection.query(insertquery, value, (queryError) => {
         if (queryError) {
             console.log(queryError);
+            res.send("0");
         }
         else {
             console.log("Inserted successfully");
+            res.send("1");
         }
     })
 
 })
+
+//login
+app.post('/login', (req, res) => {
+    console.log("Login backend", req.body);
+
+    const customer_id = req.body.customerid;
+    const password = req.body.password;
+
+    if (customer_id && password) {
+        console.log("Login checking");
+        connection.query("SELECT * FROM customers WHERE customer_id = ? AND password = ?", [customer_id, password], function (err, response, fields) {
+            if (err) throw err;
+            if (response.length > 0) {
+                console.log("Login success");
+                res.send("1");
+            }
+            else {
+                console.log("Login failed");
+                res.send("0");
+            }
+        });
+    }
+});
 
 //server port
 app.listen(port, () => {

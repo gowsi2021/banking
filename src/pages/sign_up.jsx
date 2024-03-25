@@ -1,7 +1,8 @@
-import { Container, Row, Col, Form, Button, Image, Dropdown } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image, Dropdown, Nav } from "react-bootstrap";
 import signup_image from '../images/sign_up.png';
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function sign_up() {
 
@@ -17,6 +18,8 @@ function sign_up() {
         beneficiary_ac: '',
     });
 
+    const navigate = useNavigate();
+
     const [card_type, setcard_type] = useState("visa");
 
     const { username, acno, customerid, password, phno, branch, ifsc_code, card_no, beneficiary_ac } = formData;
@@ -25,6 +28,7 @@ function sign_up() {
         e.preventDefault();
         console.log(formData);
         console.log(formData.username);
+        console.log("Hello");
 
         try {
             const res = await axios.post("http://localhost:3000/sign_up", {
@@ -39,10 +43,24 @@ function sign_up() {
                 card_type,
                 beneficiary_ac
             })
+            console.log(`${res, 'Success'}`)
+            console.log(res.data);
+            if (res.data == "1") {
+
+                console.log("Rendering login page");
+                alert("Signup successfull!");
+                navigate("/login");
+            }
+            else {
+                console.log("Failed to render to login page");
+            }
+
         }
         catch {
             console.log("Could not able to send data");
         }
+
+
     };
 
     const handleFormField = (e) => {
@@ -54,6 +72,11 @@ function sign_up() {
         console.log(eventKey);
         setcard_type(eventKey);
         console.log("card type", card_type);
+    }
+
+    const handlelogin = (e) => {
+        console.log("Navigate login clicked");
+        navigate("/login");
     }
 
     return (
@@ -144,7 +167,11 @@ function sign_up() {
                                 <Button variant="primary" type="submit">
                                     Signup
                                 </Button>
+
                             </div>
+                            <Row>
+                                <Col className="justify-content-start">{'Already have an account?'}<Button variant="link" onClick={handlelogin}>Log in</Button></Col>
+                            </Row>
                         </Form>
                     </Col>
                 </Row>
