@@ -61,8 +61,6 @@ function sign_up() {
         catch {
             console.log("Could not able to send data");
         }
-
-
     };
 
     const handleFormField = (e) => {
@@ -83,7 +81,7 @@ function sign_up() {
 
     return (
         <div className="d-flex align-items-center vh-100 bg" >
-            <Container className="border border-3" style={{borderColor: "#5cbdb9"}}>
+            <Container className="border border-3" style={{ borderColor: "#5cbdb9" }}>
                 <Row className="mb-3 p-3">
                     <Col>
                         <h1 style={{ color: "#5cbdb9", textAlign: "center" }}>Online Banking</h1>

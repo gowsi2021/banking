@@ -1,4 +1,4 @@
-import express from "express";
+import express, { query } from "express";
 import mysql from "mysql2";
 import cors from "cors";
 
@@ -28,11 +28,13 @@ connection.connect((err) => {
         if (err) throw err;
         console.log("Table Created Successfully");
     })
-})
 
-app.get("/aj", (req, res) => {
-    res.send("Hi from Express!");
-});
+    const createtable_transaction = "create table IF NOT EXISTS transaction (customer_id VARCHAR(30), account_type VARCHAR(30), beneficiary_ac VARCHAR(30), amount VARCHAR(20), remarks VARCHAR(50), Date VARCHAR(50), transaction_no int auto_increment PRIMARY KEY)";
+    connection.query(createtable_transaction, function (err, res) {
+        if (err) throw err;
+        console.log("Transaction table created");
+    })
+})
 
 //signup
 app.post('/sign_up', (req, res) => {
@@ -66,6 +68,8 @@ app.post('/sign_up', (req, res) => {
             res.send("1");
         }
     })
+
+
 })
 
 //login
@@ -113,6 +117,28 @@ app.post('/dashboard', (req, res) => {
 //Transfer
 app.post('/transaction', (req, res) => {
     console.log("Transfer", req.body);
+
+    const customer_id = req.body.customerid;
+    const account_type = req.body.ac_type;
+    const beneficiary_ac = req.body.beneficiary_ac;
+    const amount = req.body.amount;
+    const remarks = req.body.remarks;
+    const date = "28/04/2024";
+
+
+    const inserttransaction_query = `INSERT INTO transaction(customer_id, account_type, beneficiary_ac, amount, remarks, date) VALUES (?, ?, ? , ?, ?, ?)`;
+    const value = [customer_id, account_type, beneficiary_ac, amount, remarks, date];
+
+    connection.query(inserttransaction_query, value, queryError => {
+        if (queryError) {
+            console.log(queryError);
+            res.send("0");
+        }
+        else {
+            console.log("Inserted successfully");
+            res.send("1");
+        }
+    })
 })
 
 //server port
