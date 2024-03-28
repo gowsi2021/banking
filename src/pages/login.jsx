@@ -32,6 +32,7 @@ function login() {
             if (res.data == "1") {
                 console.log("Rendering Dashboard page");
                 alert("Login successfull!");
+                navigate("/dashboard", { state: formData });
             }
             else {
                 console.log("Failed to render to login page");
@@ -49,8 +50,8 @@ function login() {
 
 
     return (
-        <div className="d-flex align-items-center vh-100" style={{ background: "#fbe3e8" }}>
-            <Container className="w-50 p-3" style={{ background: "#ffffff" }}>
+        <div className="d-flex align-items-center vh-100">
+            <Container className="w-50 p-3 border border-3" style={{ background: "#ffffff" }}>
                 <Row className="mb-3">
                     <Col>
                         <h1 style={{ color: "#5cbdb9", textAlign: "center" }}>Online Banking</h1>

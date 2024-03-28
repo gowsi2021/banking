@@ -1,5 +1,6 @@
 import { Container, Row, Col, Form, Button, Image, Dropdown, Nav } from "react-bootstrap";
 import signup_image from '../images/sign_up.png';
+
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +54,7 @@ function sign_up() {
             }
             else {
                 console.log("Failed to render to login page");
+                alert("Unable to register, Please Sign_up again");
             }
 
         }
@@ -80,9 +82,9 @@ function sign_up() {
     }
 
     return (
-        <div className="d-flex align-items-center vh-100" style={{ background: "#fbe3e8" }}>
-            <Container style={{ background: "#ffffff" }}>
-                <Row className="mb-3">
+        <div className="d-flex align-items-center vh-100 bg" >
+            <Container className="border border-3" style={{borderColor: "#5cbdb9"}}>
+                <Row className="mb-3 p-3">
                     <Col>
                         <h1 style={{ color: "#5cbdb9", textAlign: "center" }}>Online Banking</h1>
                     </Col>

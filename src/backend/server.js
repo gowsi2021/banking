@@ -30,8 +30,8 @@ connection.connect((err) => {
     })
 })
 
-app.get("/", (req, res) => {
-    res.send("Hello from Express!");
+app.get("/aj", (req, res) => {
+    res.send("Hi from Express!");
 });
 
 //signup
@@ -41,7 +41,7 @@ app.post('/sign_up', (req, res) => {
     const ac_no = req.body.acno;
     const customer_id = req.body.customerid;
     const password = req.body.password;
-    const ph_no = req.body.ph_no;
+    const ph_no = req.body.phno;
     const branch = req.body.branch;
     const ifsc_code = req.body.ifsc_code;
     const card_no = req.body.card_no;
@@ -49,8 +49,7 @@ app.post('/sign_up', (req, res) => {
     const beneficiary_ac = req.body.beneficiary_ac;
     const balance = 0;
 
-    console.log("Customer", customer_id);
-    console.log("Customer", ac_no);
+    console.log("Customer", ph_no);
 
     console.log("Checking data");
 
@@ -67,7 +66,6 @@ app.post('/sign_up', (req, res) => {
             res.send("1");
         }
     })
-
 })
 
 //login
@@ -92,6 +90,30 @@ app.post('/login', (req, res) => {
         });
     }
 });
+
+//dashboard
+app.post('/dashboard', (req, res) => {
+    console.log("Backend dashboard");
+    console.log(req.body);
+
+    const customer_id = req.body.customerid;
+
+    connection.query("SELECT * FROM customers WHERE customer_id = ?", [customer_id], function (err, response, fields) {
+
+        if (err) throw err;
+        if (response.length > 0) {
+            console.log("Select response", response)
+            res.json(response);
+        }
+
+    })
+})
+
+
+//Transfer
+app.post('/transaction', (req, res) => {
+    console.log("Transfer", req.body);
+})
 
 //server port
 app.listen(port, () => {
