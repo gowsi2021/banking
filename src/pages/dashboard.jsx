@@ -6,20 +6,43 @@ import logo_image from "../images/logo.png";
 import "../pages/dashboard.css";
 
 function Statememt(props) {
+
+    const { dataarray1 } = props;
+    console.log('dataarray to statement: ', dataarray1);
     return (
-        <Modal {...props} size="lg" aria-labelledbt="contained-modal-title-vcenter" centered>
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Modal heading
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <h4>Centered modal</h4>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
-        </Modal>
+        <div>
+            <Modal {...props} size="lg" aria-labelledbt="contained-modal-title-vcenter" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Modal heading
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Table striped bordered hover>
+                        <thead>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Transaction NO</th>
+                            <th>Credit / Debit</th>
+                            <th>Closing balance</th>
+                        </thead>
+                        <tbody>
+                            {dataarray && Array.from(dataarray1).forEach((value, index) => { console.log('Value: ', value) })}
+                            <tr>
+                                <td>29/04/2024</td>
+                                <td>Bill Payment</td>
+                                <td>1</td>
+                                <td>+2000</td>
+                                <td>2000</td>z
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={props.onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
     )
 }
 
@@ -42,6 +65,7 @@ function dashboard() {
     const navigate = useNavigate();
     const data = location.state;
     const [customerid, setCustomerid] = useState(data.customerid);
+    const [dataarray, setDataarray] = useState([]);
 
     const [formData, setFormData] = useState({
         ac_type: "Select an account",
@@ -89,8 +113,6 @@ function dashboard() {
         }
         fetchData();
 
-
-
     }, []);
 
     const handleAccount = (eventKey) => {
@@ -114,6 +136,13 @@ function dashboard() {
                 beneficiary_ac,
                 remarks,
             })
+            if (res.data == "1") {
+                alert("Transaction Successfull!");
+            }
+            else {
+                console.log("Failed to render to login page");
+                alert("Invalid CustomerID and Password");
+            }
         }
         catch {
             console.log("Could not able to send data to backend");
@@ -125,6 +154,27 @@ function dashboard() {
         setFormData({ ...formData, [eventKey.target.name]: eventKey.target.value });
     }
 
+    const handleTransaction = async () => {
+        console.log("Transacton");
+
+        try {
+            const res = await axios.post("http://localhost:3000/statement", {
+                customerid
+            })
+            console.log("Data", res);
+            dataarray.push(res.data);
+            // setDataarray(res.data);
+            console.log("DataArray", dataarray);
+        }
+        catch {
+            console.log("Could not able to send data to backend");
+        }
+    }
+
+    const handleReset = (e) => {
+        console.log("Reset clicked");
+        setFormData({ ...formData, [e.target.name]: "1" });
+    }
 
     return (
         <div>
@@ -135,18 +185,17 @@ function dashboard() {
             </div>
             <hr></hr>
             <div className="d-flex align-items-center vh-100 bg" >
-
                 <Container style={{ marginTop: "0" }}>
                     <Row>
                         <h1 className="d-flex justify-content-start">Greetings {username}!</h1>
                     </Row>
 
-                    <Container className="border p-5 shadow-lg" style={{ borderColor: "#5cbdb9", }}>
-                        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1" className="tab" >
+                    <Container className="border p-5 shadow-lg" style={{ borderColor: "#5cbdb9" }}>
+                        <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1"  >
                             <Row className="tab" >
                                 <Col sm={4}>
                                     <ListGroup>
-                                        <ListGroup.Item action eventKey="#link1"  >
+                                        <ListGroup.Item action eventKey="#link1">
                                             Account Summery
                                         </ListGroup.Item>
                                         <ListGroup.Item action eventKey="#link2" >
@@ -166,13 +215,13 @@ function dashboard() {
                                                     </Accordion.Header>
 
                                                     <Accordion.Body>
-                                                        <Table>
+                                                        <Table borderless>
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Account no: {acno}</td>
                                                                     <td>Baranch: {branch}</td>
                                                                     <td><Button style={{ backgroundColor: "#0786a3" }} onClick={() => setModalShow(true)}>View Statement</Button>
-                                                                        <Statememt show={modalshow} onHide={() => setModalShow(false)}></Statememt></td>
+                                                                        <Statememt show={modalshow} dataarray1={dataarray} onHide={() => setModalShow(false)} onEnter={handleTransaction}></Statememt></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Name: {username}</td>
@@ -191,13 +240,13 @@ function dashboard() {
                                                         </div>
                                                     </Accordion.Header>
                                                     <Accordion.Body>
-                                                        <Table>
+                                                        <Table borderless>
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Account no: {acno}</td>
                                                                     <td>Baranch {branch}</td>
                                                                     <td><Button style={{ backgroundColor: "#0786a3" }} onClick={() => setModalShow(true)}>View Statement</Button>
-                                                                        <Statememt show={modalshow} onHide={() => setModalShow(false)}></Statememt></td>
+                                                                        <Statememt show={modalshow} onHide={() => setModalShow(false)} ></Statememt></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Name: {username}</td>
@@ -216,12 +265,12 @@ function dashboard() {
                                                         </div>
                                                     </Accordion.Header>
                                                     <Accordion.Body>
-                                                        <Table>
+                                                        <Table borderless>
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Card No: {card_no}</td>
                                                                     <td>Type: {card_type}</td>
-                                                                    <td><Button style={{ backgroundColor: "#0786a3" }} onClick={() => setModalShow(true)}>View Statement</Button>
+                                                                    <td><Button style={{ backgroundColor: "#0786a3", marginLeft: "15%" }} onClick={() => setModalShow(true)}>View Statement</Button>
                                                                         <Statememt show={modalshow} onHide={() => setModalShow(false)}></Statememt></td>
                                                                 </tr>
                                                                 <tr>
@@ -286,7 +335,7 @@ function dashboard() {
                                                         </Col>
                                                     </Form.Group>
                                                     <div className="d-flex justify-content-center">
-                                                        <Row className="p-3"><Col column sm="5"><Button style={{ backgroundColor: "#0786a3" }}>Reset</Button></Col>
+                                                        <Row className="p-3"><Col onClick={handleReset} column sm="5"><Button style={{ backgroundColor: "#0786a3" }}>Reset</Button></Col>
                                                             <Col column sm="1"><Button onClick={handleForm} style={{ backgroundColor: "#0786a3" }}>Send</Button></Col></Row>
                                                     </div>
                                                 </Form>

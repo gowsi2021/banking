@@ -141,6 +141,26 @@ app.post('/transaction', (req, res) => {
     })
 })
 
+
+app.post('/statement', (req, res) => {
+    console.log("Statement");
+    console.log(req.body);
+    const customer_id = req.body.customerid;
+
+    connection.query("SELECT * FROM transaction WHERE customer_id = ?", [customer_id], function (err, response, fields) {
+
+        if (err) throw err;
+        if (response.length > 0) {
+            console.log("Select response", response)
+            res.json(response);
+        }
+        else {
+            console.log("Could able to get data");
+        }
+
+    })
+})
+
 //server port
 app.listen(port, () => {
     console.log(`Express server running at http://localhost:${port}`);
