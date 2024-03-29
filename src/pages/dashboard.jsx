@@ -8,13 +8,15 @@ import "../pages/dashboard.css";
 function Statememt(props) {
 
     const { dataarray1 } = props;
+    const { saving_balance } = props;
     console.log('dataarray to statement: ', dataarray1);
     return (
         <div>
             <Modal {...props} size="lg" aria-labelledbt="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Modal heading
+                    <Modal.Title >
+                        <div className="d-flex text-left">Statement</div>
+
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -27,15 +29,21 @@ function Statememt(props) {
                             <th>Closing balance</th>
                         </thead>
                         <tbody>
-                            {dataarray && Array.from(dataarray1).forEach((value, index) => { console.log('Value: ', value) })}
+                            {dataarray1 && Array.from(dataarray1).forEach((value, index) => { console.log('Value: ', value) })}
                             <tr>
                                 <td>29/04/2024</td>
                                 <td>Bill Payment</td>
                                 <td>1</td>
                                 <td>+2000</td>
-                                <td>2000</td>z
+                                <td>2000</td>
                             </tr>
                         </tbody>
+
+                        {/* <tbody>
+                            {dataarray1 && dataarray1.map((item, index) =>  (
+                                <th key={index}>{item}</th>
+                            ))}
+                        </tbody> */}
                     </Table>
                 </Modal.Body>
                 <Modal.Footer>
@@ -246,7 +254,7 @@ function dashboard() {
                                                                     <td>Account no: {acno}</td>
                                                                     <td>Baranch {branch}</td>
                                                                     <td><Button style={{ backgroundColor: "#0786a3" }} onClick={() => setModalShow(true)}>View Statement</Button>
-                                                                        <Statememt show={modalshow} onHide={() => setModalShow(false)} ></Statememt></td>
+                                                                        <Statememt show={modalshow} onHide={() => setModalShow(false)} onEnter={handleTransaction}></Statememt></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Name: {username}</td>

@@ -1,6 +1,6 @@
 # Banking Web application using React and Node.js
 
-This project is a banking web application built with React for the forndend and Node.js for the backend.
+This project is a banking web application built with React for the fornd end and Node.js for the back end.
 
 ## Features
 
@@ -11,7 +11,7 @@ This project is a banking web application built with React for the forndend and 
 
 ## Technologies Used
 
-### Frondend
+### Frond end
 
 - React
 - React Router
@@ -19,7 +19,7 @@ This project is a banking web application built with React for the forndend and 
 - Bootstrap
 - Axios
 
-### Backend 
+### Back end 
 
 - Node.js
 - Express (for building RESTful APIs)
@@ -64,6 +64,6 @@ The backend server should now be running on `http://localhost:3000`
 
 1. Sign up for a new account or log in with existing credentials.
 2. Once logged in, you can view your account details and balance (Saving, Current and Credit).
-3. Transfer funds for a transfer fund form your account to Beneficiary Account.
+3. Transfer funds for a transfer fund from your account to Beneficiary Account.
 4. You can able to do transactions for your account.
 
