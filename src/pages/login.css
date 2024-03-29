@@ -1,0 +1,12 @@
+.top-left-corner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 12%;
+    width: 8%;
+    background-color: #d5eff5;
+}
+
+.two-color-bg {
+    background: linear-gradient(to right, #d5eff5 70%, #ffffff 70%);
+}

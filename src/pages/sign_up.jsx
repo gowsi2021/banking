@@ -1,9 +1,10 @@
-import { Container, Row, Col, Form, Button, Image, Dropdown, Nav } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image, Dropdown } from "react-bootstrap";
 import signup_image from '../images/sign_up.png';
-
+import logo_image from '../images/log-bg.jpg'
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../pages/sign_up.css";
 
 function sign_up() {
 
@@ -80,11 +81,12 @@ function sign_up() {
     }
 
     return (
-        <div className="d-flex align-items-center vh-100 bg" >
-            <Container className="border border-3" style={{ borderColor: "#5cbdb9" }}>
+        <div className="d-flex align-items-center vh-100 bg container-fluid two-color-bg" >
+            <Image className="top-left-corner" src={logo_image}></Image>
+            <Container style={{ backgroundColor: "#ffffff" }} className="shadow-lg p-3 mb-5 bg-white rounded">
                 <Row className="mb-3 p-3">
                     <Col>
-                        <h1 style={{ color: "#5cbdb9", textAlign: "center" }}>Online Banking</h1>
+                        <h1 style={{ textAlign: "center" }}>Online Banking</h1>
                     </Col>
                 </Row>
                 <Row>
@@ -94,7 +96,7 @@ function sign_up() {
                     <Col>
                         <Row className="mb-3">
                             <Col>
-                                <h2 style={{ color: "#5cbdb9", textAlign: "center" }}>Sign up</h2>
+                                <h2 style={{ textAlign: "center" }}>Sign up</h2>
                             </Col>
                         </Row>
                         <Form onSubmit={handleSubmit}>
@@ -164,7 +166,7 @@ function sign_up() {
                                 </Form.Group>
                             </Row>
                             <div className="d-flex justify-content-center">
-                                <Button variant="primary" type="submit">
+                                <Button style={{ backgroundColor: "#0786a3" }} type="submit">
                                     Signup
                                 </Button>
 

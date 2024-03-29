@@ -1,0 +1,12 @@
+.top-left-corner1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 8%;
+    width: 4%;
+    background-color: #d5eff5;
+}
+
+.tab {
+    background-color: #f2f9fa;
+}

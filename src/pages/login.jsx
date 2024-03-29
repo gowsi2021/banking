@@ -3,6 +3,8 @@ import login_image from '../images/login.jpg';
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import logo_image from '../images/log-bg.jpg'
+import '../pages/login.css';
 
 function login() {
     const [formData, setFormData] = useState({
@@ -50,11 +52,12 @@ function login() {
 
 
     return (
-        <div className="d-flex align-items-center vh-100">
-            <Container className="w-50 p-3 border border-3" style={{ background: "#ffffff" }}>
+        <div className="d-flex align-items-center vh-100 two-color-bg">
+            <Image className="top-left-corner" src={logo_image}></Image>
+            <Container className="w-50 p-3 shadow-lg p-3 mb-5 bg-white rounded" style={{ background: "#ffffff" }}>
                 <Row className="mb-3">
                     <Col>
-                        <h1 style={{ color: "#5cbdb9", textAlign: "center" }}>Online Banking</h1>
+                        <h1 style={{ textAlign: "center" }}>Online Banking</h1>
                     </Col>
                 </Row>
                 <Row>
@@ -64,7 +67,7 @@ function login() {
                     <Col>
                         <Row className="mb-3">
                             <Col>
-                                <h2 style={{ color: "#5cbdb9", textAlign: "center" }}>Login</h2>
+                                <h6>Login to your account</h6>
                             </Col>
                         </Row>
                         <Form onSubmit={handleSubmit}>
@@ -82,7 +85,7 @@ function login() {
                                 </Form.Group>
                             </Row>
                             <div className="d-flex justify-content-center">
-                                <Button variant="primary" type="submit">
+                                <Button style={{ backgroundColor: "#0786a3" }} type="submit">
                                     Login
                                 </Button>
                             </div>
